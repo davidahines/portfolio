@@ -1,0 +1,9 @@
+extends layout
+block content
+  each post in posts
+    div.blog_post
+      h2.post_title
+        a.post_title(href=post.title) #{post.title}
+      p.post_date_created #{moment(post.date_created.format).format('M/DD/YYYY')}
+      div.post_body #{post.body}
+      p.post_author Posted by #{post.author}

@@ -1,0 +1,62 @@
+ul.nav_ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li.nav_li {
+    float: left;
+}
+
+li a.nav_link {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+a.nav_link:hover:not(.active) {
+    background-color: #111;
+}
+
+a.nav_link.active {
+  background-color:#4CAF50;
+}
+
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a.nav_link {
+  color: #00B7FF;
+}
+
+.post_date_created  {
+    margin-bottom: 17px;
+    font-family: "Yanone Kaffeesatz", Helvetica, sans-serif;
+    padding-left: 0px;
+    font-size: 12px;
+    color: #777;
+}
+
+.post_author  {
+    margin-bottom: 17px;
+    font-family: "Yanone Kaffeesatz", Helvetica, sans-serif;
+    padding-left: 0px;
+    font-size: 12px;
+    color: #777;
+}
+
+.post_title {
+  color: #000;
+  text-decoration: none;
+}
+
+.social_media_icon {
+  float:left;
+
+}
