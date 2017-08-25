@@ -1,0 +1,31 @@
+extends layout
+block content
+  h2.blog_posts_header  Blog Posts
+  table.posts_table
+    tr
+      th.th_post_title Title
+      th.th_post_author Author
+      th.th_post_date_created Date Created
+      th.th_post_published Published?
+      th.th_post_date_published Date Published
+    each post in posts
+      tr.tr_blog_post
+        td.td_post_title
+          a.post_title(href=post.title) #{post.title}
+        td.td_post_author #{post.author}
+        td.td_post_date_created #{moment(post.date_created.format).format('M/DD/YYYY')}
+        td.td_post_date_published #{post.published}
+        td.td_post_date_created #{moment(post.date_published.format).format('M/DD/YYYY')}
+  div.post_form
+    h2 Add Post
+    form(action='/posts/new',method='post')
+      div(data-role='fieldcontain')
+        fieldset(data-role='controlgroup')
+          p
+            label(for='title') title
+          input(id='title',type='text',value='',placeholder='', name='title')
+          p
+            label(for='body') body
+          input(id='body',type='text',value='',placeholder='', name='body')
+      div(data-role='fieldcontain')
+        input(type='submit',value='Add Post',data-transition='fade', data-theme='c')
