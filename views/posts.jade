@@ -17,15 +17,18 @@ block content
         td.td_post_date_published #{post.published}
         td.td_post_date_created #{moment(post.date_published.format).format('M/DD/YYYY')}
   div.post_form
-    h2 Add Post
     form(action='/posts/new',method='post')
-      div(data-role='fieldcontain')
-        fieldset(data-role='controlgroup')
-          p
-            label(for='title') title
+      ul.pretty-form(data-role='fieldcontain')
+        li
+          h2 Add Post
+        li
+          label(for='title') Title
           input(id='title',type='text',value='',placeholder='', name='title')
-          p
-            label(for='body') body
-          input(id='body',type='text',value='',placeholder='', name='body')
-      div(data-role='fieldcontain')
-        input(type='submit',value='Add Post',data-transition='fade', data-theme='c')
+        li
+          label(for='body') Body
+          textarea#add_post_body(cols='40', rows='10', name='body')
+        li
+          input(type='submit',value='Add Post',data-transition='fade', data-theme='c')
+    script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')
+    script(type='text/javascript')
+      | var simplemde = new SimpleMDE({ element: document.getElementById("add_post_body") });
