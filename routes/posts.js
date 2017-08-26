@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var database = require('../db');
-
+var ObjectId = require('mongodb').ObjectId;
 
 router.get('/', function(req, res, next) {
   var postsCollection = database.get().collection('posts');
@@ -27,9 +27,22 @@ router.post('/new', function(req, res, next) {
       if(err){
         res.redirect("/error");
       }else{
-        res.redirect("/");
+        res.redirect("/posts");
       }
   });
 });
+
+router.get('/delete', function(req, res, next) {
+  var postsCollection = database.get().collection('posts');
+  postsCollection.remove({"_id":  ObjectId(req.query._id)}, function(err, result) {
+    if(!err){
+      res.redirect("/posts");
+    }else{
+      res.redirect("/error");
+    }
+  });
+});
+
+
 
 module.exports = router;

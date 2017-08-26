@@ -8,6 +8,7 @@ block content
       th.th_post_date_created Date Created
       th.th_post_published Published?
       th.th_post_date_published Date Published
+      th.th_post_controls Controls
     each post in posts
       tr.tr_blog_post
         td.td_post_title
@@ -16,6 +17,13 @@ block content
         td.td_post_date_created #{moment(post.date_created.format).format('M/DD/YYYY')}
         td.td_post_date_published #{post.published}
         td.td_post_date_created #{moment(post.date_published.format).format('M/DD/YYYY')}
+        td.td_post_controls
+          p.button_container
+            a(href='/posts/edit?_id=#{post._id}')
+              img(src= "/images/icons/layout_edit.png")
+          p.button_container
+            a(href='/posts/delete?_id=#{post._id}')
+              img(src= "/images/icons/delete.png")
   div.post_form
     form(action='/posts/new',method='post')
       ul.pretty-form(data-role='fieldcontain')
@@ -25,8 +33,9 @@ block content
           label(for='title') Title
           input(id='title',type='text',value='',placeholder='', name='title')
         li
-          label(for='body') Body
-          textarea#add_post_body(cols='40', rows='10', name='body')
+          div.add_post_container
+            label(for='body') Body
+            textarea#add_post_body(cols='40', rows='10', name='body')
         li
           input(type='submit',value='Add Post',data-transition='fade', data-theme='c')
     script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')
