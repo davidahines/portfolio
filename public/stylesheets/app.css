@@ -192,3 +192,10 @@ select{
     float: left;
     margin: 5px;
 }
+
+input.unstyled, button.unstyled, submit.unstyled {
+  background:none;
+  border:none;
+  font-size:1em;
+  color:blue;
+}

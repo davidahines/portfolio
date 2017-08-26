@@ -22,8 +22,11 @@ block content
             a(href='/posts/edit?_id=#{post._id}')
               img(src= "/images/icons/layout_edit.png")
           p.button_container
-            a(href='/posts/delete?_id=#{post._id}')
-              img(src= "/images/icons/delete.png")
+            form(method='POST', action='/posts/#{post._id}?_method=DELETE')
+              button(type='submit', class='unstyled')
+                img(src= "/images/icons/delete.png")
+
+
   div.post_form
     form(action='/posts/new',method='post')
       ul.pretty-form(data-role='fieldcontain')

@@ -3,6 +3,7 @@ var router = express.Router();
 var database = require('../db');
 var ObjectId = require('mongodb').ObjectId;
 
+
 router.get('/', function(req, res, next) {
   var postsCollection = database.get().collection('posts');
   postsCollection.find().toArray(function(err, postDocs) {
@@ -15,7 +16,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/new', function(req, res, next) {
   var postsCollection = database.get().collection('posts');
-  var postToInsert = {
+  var post = {
      title: req.body.title,
      body: req.body.body,
      date_created: Date.now(),
@@ -23,7 +24,7 @@ router.post('/new', function(req, res, next) {
      date_published: "",
      author: "admin",
   }
-  postsCollection.insertOne(postToInsert, function(err, result) {
+  postsCollection.insertOne(post, function(err, result) {
       if(err){
         res.redirect("/error");
       }else{
@@ -32,9 +33,9 @@ router.post('/new', function(req, res, next) {
   });
 });
 
-router.get('/delete', function(req, res, next) {
+router.delete('/:id', function(req, res, next) {
   var postsCollection = database.get().collection('posts');
-  postsCollection.remove({"_id":  ObjectId(req.query._id)}, function(err, result) {
+  postsCollection.remove({"_id":  ObjectId(req.params.id)}, function(err, result) {
     if(!err){
       res.redirect("/posts");
     }else{
@@ -42,7 +43,5 @@ router.get('/delete', function(req, res, next) {
     }
   });
 });
-
-
 
 module.exports = router;
