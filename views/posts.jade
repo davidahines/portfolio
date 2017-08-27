@@ -14,15 +14,16 @@ block content
         td.td_post_title
           a.post_title(href=post.title) #{post.title}
         td.td_post_author #{post.author}
-        td.td_post_date_created #{moment(post.date_created.format).format('M/DD/YYYY')}
+        td.td_post_date_created #{post.date_created?moment(post.date_created.format).format('M/DD/YYYY'):''}
         td.td_post_date_published #{post.published}
-        td.td_post_date_created #{moment(post.date_published.format).format('M/DD/YYYY')}
+        td.td_post_date_created #{post.date_published?moment(post.date_published.format).format('M/DD/YYYY'):''}
         td.td_post_controls
           p.button_container
-            a(href='/posts/edit?_id=#{post._id}')
+            a(href='/posts/edit/#{post._id}?')
               img(src= "/images/icons/layout_edit.png")
-          p.button_container
-            form(method='POST', action='/posts/#{post._id}?_method=DELETE')
+
+          form(method='POST', action='/posts/#{post._id}?_method=DELETE')
+            p.button_container
               button(type='submit', class='unstyled')
                 img(src= "/images/icons/delete.png")
 

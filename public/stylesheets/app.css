@@ -1,3 +1,23 @@
+h1.font0 {
+    font-family: 'Arbutus Slab', serif;
+}
+
+h1 {
+    font-size: 72px;
+    text-transform: capitalize;
+    line-height: 90px;
+    margin: 30px 0 40px;
+    padding: 0 10px;
+    vertical-align: baseline;
+    display: block;
+    font-size: 2em;
+    -webkit-margin-before: 0.67em;
+    -webkit-margin-after: 0.67em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+}
+
 ul.nav_ul {
     list-style-type: none;
     margin: 0;
@@ -198,4 +218,5 @@ input.unstyled, button.unstyled, submit.unstyled {
   border:none;
   font-size:1em;
   color:blue;
+  cursor: pointer;
 }

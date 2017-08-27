@@ -1,9 +1,19 @@
 extends layout
 block content
+  script(src='/javascripts/showdown.min.js')
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
   each post in posts
     div.blog_post
       h2.post_title
         a.post_title(href=post.title) #{post.title}
       p.post_date_created #{moment(post.date_created.format).format('M/DD/YYYY')}
-      div.post_body #{post.body}
+      div.post_body(id=post._id)
+      script(type='text/javascript')
+        |   $(document).ready(function(){
+        |     var converter = new showdown.Converter(),
+        |     text      = `#{post.body}`,
+        |     html      = converter.makeHtml(text);
+        |     var target = document.getElementById("#{post._id}");
+        |     target.innerHTML = html;
+        |   });
       p.post_author Posted by #{post.author}

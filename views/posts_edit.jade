@@ -1,0 +1,23 @@
+extends layout
+block content
+  div.post_form
+    form(method='POST', action='/posts/#{post._id}?_method=PUT')
+      ul.pretty-form(data-role='fieldcontain')
+        li
+          h2 Edit Post
+        li
+          label(for='title') Title
+          input(id='title',type='text',value='#{post.title}',placeholder='', name='title')
+        li
+          div.add_post_container
+            label(for='body') Body
+            textarea#edit_post_body(cols='40', rows='10', name='body', value='#{post.body}')
+        li
+          label(for='published') Published?
+          input(type="checkbox", name="published", value="value" checked=post.published?"checked":undefined).form-control
+        li
+          input(type='submit',value='Save Post',data-transition='fade', data-theme='c')
+    script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')
+    script(type='text/javascript')
+      | var simplemde = new SimpleMDE({ element: document.getElementById("edit_post_body") });
+      | simplemde.value(`#{post.body}`);

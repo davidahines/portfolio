@@ -4,13 +4,52 @@ var database = require('../db');
 var ObjectId = require('mongodb').ObjectId;
 
 
+
 router.get('/', function(req, res, next) {
   var postsCollection = database.get().collection('posts');
   postsCollection.find().toArray(function(err, postDocs) {
     res.render('posts', {
-      title: 'David A Hines',
       posts: postDocs
     });
+  });
+});
+
+router.get('/edit/:id', function(req, res, next) {
+  var postsCollection = database.get().collection('posts');
+  postsCollection.findOne({_id: ObjectId(req.params.id)}, function(err, postDoc) {
+    if(!err){
+      res.render('posts_edit', {
+        post: postDoc
+      });
+    }else{
+      res.redirect("/error");
+    }
+  });
+});
+
+router.put('/:id', function(req, res, next) {
+  var postsCollection = database.get().collection('posts');
+  var publishedBool = req.body.published == "value" ? true : false;
+  var valsToSet = {
+    title: req.body.title,
+    body: req.body.body,
+    published: publishedBool
+  }
+  var postUpdate = {
+    $set: valsToSet
+  }
+
+  if(publishedBool){
+    valsToSet.date_published = Date.now();
+  }
+  console.log("postUpdate: "+JSON.stringify(postUpdate));
+  console.log("PublishedBool: "+publishedBool);
+  postsCollection.findOneAndUpdate({_id: ObjectId(req.params.id)}, postUpdate, function(err, postDoc) {
+    if(!err){
+      res.redirect("/posts");
+    }else{
+      res.redirect("/error");
+    }
   });
 });
 
