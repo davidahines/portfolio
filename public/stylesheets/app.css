@@ -220,7 +220,9 @@ input.unstyled, button.unstyled, submit.unstyled {
   color:blue;
   cursor: pointer;
 }
-
+.hidden{
+  display: none;
+}
 .right_nav{
   float:right;
   background-color: #f1f1f1;

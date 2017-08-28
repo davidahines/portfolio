@@ -2,6 +2,10 @@ var express = require('express');
 var router = express.Router();
 var database = require('../db');
 var ObjectId = require('mongodb').ObjectId;
+var showdown  = require('showdown'),
+    converter = new showdown.Converter();
+
+
 
 
 
@@ -18,6 +22,7 @@ router.get('/:id', function(req, res, next) {
   var postsCollection = database.get().collection('posts');
   postsCollection.findOne({_id: ObjectId(req.params.id)}, function(err, postDoc) {
     if(!err){
+      postDoc.converted_html = converter.makeHtml(postDoc.body);
       res.render('posts_view', {
         post: postDoc
       });

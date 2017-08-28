@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var database = require('../db');
 var showdown = require('showdown');
+var converter = new showdown.Converter();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -11,7 +12,8 @@ router.get('/', function(req, res, next) {
       res.render('index', {
         title: 'David A Hines',
         posts: postDocs,
-        post: postDoc[0]
+        post: postDoc[0],
+        converted_html: converter.makeHtml(postDoc[0].body)
       });
     });
   });

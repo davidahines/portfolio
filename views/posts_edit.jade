@@ -9,6 +9,7 @@ block content
           label(for='title') Title
           input(id='title',type='text',value='#{post.title}',placeholder='', name='title')
         li
+          div.hidden(id="hidden_post_body") #{post.body}
           div.add_post_container
             label(for='body') Body
             textarea#edit_post_body(cols='40', rows='10', name='body', value='#{post.body}')
@@ -20,4 +21,5 @@ block content
     script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')
     script(type='text/javascript')
       | var simplemde = new SimpleMDE({ element: document.getElementById("edit_post_body") });
-      | simplemde.value(`#{post.body}`);
+      | var source = document.getElementById("hidden_post_body");
+      | simplemde.value(source.innerHTML);
