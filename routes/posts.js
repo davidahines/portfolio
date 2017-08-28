@@ -14,6 +14,19 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/:id', function(req, res, next) {
+  var postsCollection = database.get().collection('posts');
+  postsCollection.findOne({_id: ObjectId(req.params.id)}, function(err, postDoc) {
+    if(!err){
+      res.render('posts_view', {
+        post: postDoc
+      });
+    }else{
+      res.redirect("/error");
+    }
+  });
+});
+
 router.get('/edit/:id', function(req, res, next) {
   var postsCollection = database.get().collection('posts');
   postsCollection.findOne({_id: ObjectId(req.params.id)}, function(err, postDoc) {
@@ -30,6 +43,9 @@ router.get('/edit/:id', function(req, res, next) {
 router.put('/:id', function(req, res, next) {
   var postsCollection = database.get().collection('posts');
   var publishedBool = req.body.published == "value" ? true : false;
+
+  var body = req.body.body.replace("`", "\`");
+
   var valsToSet = {
     title: req.body.title,
     body: req.body.body,
