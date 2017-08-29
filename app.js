@@ -6,14 +6,16 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 
-var index = require('./routes/index');
+var passport = require('passport');
+var expressSession = require('express-session');
+
+var index = require('./routes/index')(passport);
 var about = require('./routes/about');
 var users = require('./routes/users');
 var posts = require('./routes/posts');
 
-// Configuring Passport
-var passport = require('passport');
-var expressSession = require('express-session');
+var flash = require("connect-flash");
+
 
 var app = express();
 app.locals.moment = require('moment');
@@ -24,6 +26,9 @@ app.title = "portfolio";
 app.use(expressSession({secret: 'mySecretKey'}));
 app.use(passport.initialize());
 app.use(passport.session());
+
+var initPassport = require('./passport/init');
+initPassport(passport);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -37,6 +42,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
+
+app.use(flash());
+
 
 app.use('/', index);
 app.use('/about', about);
