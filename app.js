@@ -11,10 +11,19 @@ var about = require('./routes/about');
 var users = require('./routes/users');
 var posts = require('./routes/posts');
 
+// Configuring Passport
+var passport = require('passport');
+var expressSession = require('express-session');
 
 var app = express();
 app.locals.moment = require('moment');
 app.title = "portfolio";
+
+
+
+app.use(expressSession({secret: 'mySecretKey'}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
