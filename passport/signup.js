@@ -37,7 +37,7 @@ module.exports = function(passport){
 
 
                         // save the user
-                        usersCollection.findOneAndUpdate({'username': username}, newUser, function(err, postDoc) {
+                        usersCollection.insertOne(newUser, function(err, postDoc) {
                             if (err){
                                 console.log('Error in Saving user: '+err);
                                 throw err;
