@@ -8,8 +8,8 @@ module.exports = function(passport){
         },
         function(req, username, password, done) {
             // check in mongo if a user with username exists or not
-            var usersCollection = database.get().collection('posts');
-            usersCollection.findOne({ 'username' :  username }, 
+            var usersCollection = database.get().collection('users');
+            usersCollection.findOne({ 'username' :  username },
                 function(err, user) {
                     // In case of any error, return using the done method
                     if (err)
