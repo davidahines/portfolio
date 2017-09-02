@@ -243,3 +243,13 @@ li.right_nav_link a:hover {
     background-color: #555;
     color: white;
 }
+#logout_button {
+  float:right;
+}
+
+.error_border{
+  border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border: 0px solid #000000;
+}

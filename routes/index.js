@@ -47,5 +47,13 @@ module.exports = function(passport){
     failureFlash : true
   }));
 
+  router.get('/logout', function(req,res){
+    req.logOut();
+    req.session.destroy(function (err) {
+        res.redirect('/'); //Inside a callback… bulletproof!
+    });
+  });
+
+
   return router;
 }

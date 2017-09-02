@@ -4,20 +4,22 @@ var database = require('../db');
 var ObjectId = require('mongodb').ObjectId;
 var showdown  = require('showdown'),
 converter = new showdown.Converter();
-var utils = require('../utils');
 
 
 
 module.exports = function(passport){
+
   isAuthenticated = function(req, res, next) {
-    if (req.isAuthenticated) {
+    console.log("checking if request is authenticated")
+    if (req.user) {
       next();
     } else {
       res.redirect('/login_page');
     }
   }
+
   router.get('/', isAuthenticated, function(req, res, next) {
-    console.log("authenticated");
+    console.log('checking authentication');
     var postsCollection = database.get().collection('posts');
     postsCollection.find().toArray(function(err, postDocs) {
       res.render('posts', {
@@ -40,7 +42,7 @@ module.exports = function(passport){
     });
   });
 
-  router.get('/edit/:id', function(req, res, next) {
+  router.get('/edit/:id', isAuthenticated, function(req, res, next) {
     var postsCollection = database.get().collection('posts');
     postsCollection.findOne({_id: ObjectId(req.params.id)}, function(err, postDoc) {
       if(!err){
@@ -53,7 +55,7 @@ module.exports = function(passport){
     });
   });
 
-  router.put('/:id', function(req, res, next) {
+  router.put('/:id', isAuthenticated, function(req, res, next) {
     var postsCollection = database.get().collection('posts');
     var publishedBool = req.body.published == "value" ? true : false;
 
@@ -82,7 +84,7 @@ module.exports = function(passport){
     });
   });
 
-  router.post('/new', function(req, res, next) {
+  router.post('/new', isAuthenticated, function(req, res, next) {
     var postsCollection = database.get().collection('posts');
     var post = {
       title: req.body.title,
@@ -101,13 +103,13 @@ module.exports = function(passport){
     });
   });
 
-  router.delete('/:id', function(req, res, next) {
+  router.delete('/:id', isAuthenticated, function(req, res, next) {
     var postsCollection = database.get().collection('posts');
     postsCollection.remove({"_id":  ObjectId(req.params.id)}, function(err, result) {
-      if(!err){
-        res.redirect("/posts");
-      }else{
+      if(err){
         res.redirect("/error");
+      }else{
+        res.redirect("/posts");
       }
     });
   });

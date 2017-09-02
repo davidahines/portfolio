@@ -12,7 +12,7 @@ var expressSession = require('express-session');
 var index = require('./routes/index')(passport);
 var about = require('./routes/about');
 var users = require('./routes/users');
-var posts = require('./routes/posts');
+var posts = require('./routes/posts')(passport);
 
 var flash = require("connect-flash");
 

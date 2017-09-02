@@ -11,18 +11,22 @@ module.exports = function(passport){
     });
 
     passport.deserializeUser(function(username, done) {
-      console.log('deserializing user:',username);
+      console.log('attempting to deserialize user:',username);
       var usersCollection = database.get().collection('users');
       usersCollection.findOne({'username': username}, function(err, userDoc) {
+        if(err){
+          console.log("error getting user from db");
+          done(err, user);
+        }
         var user = {
           _id: userDoc._id,
           username: userDoc.username,
-          pasword: userDoc.password,
+          password: userDoc.password,
           email: userDoc.email,
           firstName: userDoc.firstName,
           lastName: userDoc.lastName
         }
-        console.log('deserializing user:',user);
+        console.log('deserialized user:' +JSON.stringify(user));
         done(err, user);
       });
     });
