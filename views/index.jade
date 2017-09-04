@@ -7,7 +7,9 @@ block content
     ul.right_nav_list
       each post in posts
         li.right_nav_link
-          a.post_title(href="/posts/#{post._id}") #{post.title}
+          a.post_title(href="/posts/#{post._id}")
+            p.no_margin #{post.title}
+            p.no_margin.post_date_created.text_center #{moment(post.date_created.format).format('M/DD/YYYY')}
   #message
   if message
     div.error_border
