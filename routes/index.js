@@ -18,14 +18,15 @@ module.exports = function(passport){
           posts: postDocs,
           post: postDoc[0],
           converted_html: converter.makeHtml(postDoc[0].body),
-          message: req.flash('message')
+          message: req.flash('message'),
+          authenticated: req.user ? true : false
         });
       });
     });
   });
 
   router.get('/login_page', function(req, res, next) {
-    res.render('login',{message: req.flash('message')});
+    res.render('login',{message: req.flash('message'), authenticated: req.user ? true : false});
   });
 
   /* Handle Login POST */

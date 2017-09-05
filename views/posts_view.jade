@@ -2,17 +2,29 @@ extends layout
 block content
   script(src='/javascripts/showdown.min.js')
   script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+  div.right_nav
+    h3 Posts
+    ul.right_nav_list
+      each post in posts
+        li.right_nav_link
+          a.post_title(href="/posts/#{post._id}")
+            p.no_margin #{post.title}
+            p.no_margin.post_date_created.text_align_left #{moment(post.date_created.format).format('M/DD/YYYY')}
+  #message
+  if message
+    div.error_border
+      h1.text-center.error-message #{message}
   div.blog_post
     h2.post_title
       a.post_title(href=post.title) #{post.title}
     p.post_date_created #{moment(post.date_created.format).format('M/DD/YYYY')}
-    div.post_body(id=post._id)
+    div.post_body(id=post._id) #{post.body}
     script(type='text/javascript')
       |   $(document).ready(function(){
-      |     var converter = new showdown.Converter(),
-      |     text      = `#{post.body}`,
-      |     html      = converter.makeHtml(text);
+      |     var source = document.getElementById("#{post._id}");
       |     var target = document.getElementById("#{post._id}");
+      |     converter = new showdown.Converter(),
+      |     html = converter.makeHtml(source.innerHTML);
       |     target.innerHTML = html;
       |   });
     p.post_author Posted by #{post.author}

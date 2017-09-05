@@ -23,22 +23,25 @@ module.exports = function(passport){
     var postsCollection = database.get().collection('posts');
     postsCollection.find().toArray(function(err, postDocs) {
       res.render('posts', {
-        posts: postDocs
+        posts: postDocs,
+        authenticated: req.user ? true : false
       });
     });
   });
 
   router.get('/:id', function(req, res, next) {
     var postsCollection = database.get().collection('posts');
-    postsCollection.findOne({_id: ObjectId(req.params.id)}, function(err, postDoc) {
-      if(!err){
-        postDoc.converted_html = converter.makeHtml(postDoc.body);
+    postsCollection.find({published: true}, {sort: {date_created: 1}}).toArray(function(err, postDocs) {
+      postsCollection.find({_id: ObjectId(req.params.id), published: true}, {sort: {date_created: 1}}).limit(1).toArray(function(err, postDoc) {
         res.render('posts_view', {
-          post: postDoc
+          title: 'David A Hines',
+          posts: postDocs,
+          post: postDoc[0],
+          converted_html: converter.makeHtml(postDoc[0].body),
+          message: req.flash('message'),
+          authenticated: req.user ? true : false
         });
-      }else{
-        res.redirect("/error");
-      }
+      });
     });
   });
 
@@ -47,7 +50,8 @@ module.exports = function(passport){
     postsCollection.findOne({_id: ObjectId(req.params.id)}, function(err, postDoc) {
       if(!err){
         res.render('posts_edit', {
-          post: postDoc
+          post: postDoc,
+          authenticated: req.user ? true : false
         });
       }else{
         res.redirect("/error");
