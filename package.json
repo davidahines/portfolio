@@ -27,5 +27,18 @@
   },
   "devDependencies": {
     "nodemon": "^1.11.0"
-  }
+  },
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidahines/portfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davidahines/portfolio/issues"
+  },
+  "homepage": "https://github.com/davidahines/portfolio#readme",
+  "description": ""
 }

@@ -18,6 +18,10 @@ h1 {
     font-weight: bold;
 }
 
+ul.test{
+
+}
+
 ul.nav_ul {
     list-style-type: none;
     margin: 0;
@@ -262,5 +266,5 @@ li.right_nav_link a:hover {
 }
 
 .no_margin {
-  margin: 0;  
+  margin: 0;
 }
